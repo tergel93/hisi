@@ -12,9 +12,9 @@
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define MAX(a, b) ((a) < (b) ? (b) : (a))
-#define ABS(x) ((x) < 0 ? -(x) : (x))
+#define DISTANCE(a, b) ((a) > (b) ? (a)-(b) : (b) -(a))
 
-static void print_lines(Str **lines, int height);
+static void print_lines(Str **lines, unsigned int height);
 
 static void pre_render(void);
 
@@ -32,14 +32,14 @@ void init(void) {
 }
 
 static struct window {
-    int cursor_y;
-    int height;
+    unsigned int cursor_y;
+    unsigned int height;
     int maxY, maxX;
     bool keep_rendering;
 } window;
 
 static struct input {
-    int step_counter;
+    unsigned int step_counter;
     char last_input;
 } input;
 
@@ -51,9 +51,9 @@ static void pre_render(void) {
     getmaxyx(stdscr, window.maxY, window.maxX); // get window size
 }
 
-static void print_lines(Str **lines, int height) {
+static void print_lines(Str **lines, unsigned int height) {
     for (int i = 0; i < height; i++) {
-        mvprintw(i, 0, "%2d", ABS(window.cursor_y - i));
+        mvprintw(i, 0, "%2u", DISTANCE(window.cursor_y, i));
         mvprintw(i, 5, "%s", lines[height - 1 - i]->contents);
     }
 }
@@ -81,7 +81,7 @@ static void render(void) {
 static unsigned int calculate_steps(void) {
     unsigned int step = MAX(input.step_counter, 1);
     input.step_counter = 0;
-    return step;
+    return MIN(window.height - 1, step);
 }
 
 static void handle_input(Str **lines) {
