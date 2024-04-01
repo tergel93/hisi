@@ -74,7 +74,7 @@ int read(Str *lines[], int max_count) {
                         free(str);
                     } else {
                         lines[line_count++] = str;
-                        memset(line, '\0', count);
+                        memset(line, '\0', length);
                     }
                 }
             }
