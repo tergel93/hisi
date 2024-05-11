@@ -1,4 +1,4 @@
-hisi (history Improved) is a command-line application that enhances the shell history navigation experience by providing Vim-like controls. Currently compatible only with zsh on macOS.
+hisi (history Improved) is a command-line tool that offers a Vim-like interface for navigating shell history records.
 
 # Installation
 1. Clone the repository
